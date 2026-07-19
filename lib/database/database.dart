@@ -1,12 +1,11 @@
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:path/path.dart';
+import 'package:flutter/services.dart';
 import 'dart:io';
 
-///
 /// Singleton class to manage the SQLite database for the app.
 /// The database's public methods can be accessed through the singleton
 /// "instance".
-///
 class AppDatabase {
   // Create a singleton instance:
   AppDatabase._();
@@ -57,7 +56,14 @@ class AppDatabase {
 
   /// Executes SQL to build the app's database structure.
   Future<void> createDatabase(Database db) async {
-    // TODO: build SQL here
-    await db.execute('CREATE TABLE Test (id INTEGER PRIMARY KEY, title TEXT)');
+    final sql = await rootBundle.loadString('lib/database/create.sql');
+    final statements = sql
+        .split(';')
+        .map((statement) => statement.trim())
+        .where((statement) => statement.isNotEmpty);
+
+    for (final statement in statements) {
+      await db.execute(statement);
+    }
   }
 }
