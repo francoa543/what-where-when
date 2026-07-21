@@ -5,5 +5,5 @@ import 'app.dart';
 void main() {
   // Start SQLite if needed and initialize the database:
   AppDatabase.instance.start();
-  runApp(const MyApp());
+  runApp(MyApp());
 }

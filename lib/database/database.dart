@@ -42,7 +42,11 @@ class AppDatabase {
 
     // Delete the database before calling createDatabase if needed and able.
     if (shouldReset) {
-      await deleteDatabase(dbPath);
+      try {
+        await deleteDatabase(dbPath);
+      } catch (e) {
+        print(e);
+      }
     }
 
     await _db?.close();
@@ -73,7 +77,10 @@ class AppDatabase {
     // Execute SQL to create tables:
     _executeSQL('lib/database/create.sql', db);
 
-    // Load test data if devMode is on and no reset is happening:
-    if (devModeOn == true && shouldReset == false) {}
+    // Load test data if devMode is on and a reset is requested:
+    if (devModeOn && shouldReset) {
+      print("Seeding Test Data");
+      _executeSQL('lib/database/insert_test_data.sql', db);
+    }
   }
 }
