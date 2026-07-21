@@ -41,12 +41,12 @@ DB Structure v1:
 | repeat_info (JSON BLOB) (NULL OK) |
 | notification_info (JSON BLOB) (NULL OK) |
 | icon_id (NULL OK) |
+| event_description (NULL OK) |
 
 | Event Titles |
 | --- |
 | title (TEXT) |
 | description (TEXT) (NULL OK) |
-| abbreviation (TEXT) (NULL OK) |
 
 | Icons |
 | --- |

@@ -15,12 +15,14 @@ CREATE TABLE locations (
     id INTEGER PRIMARY KEY AUTOINCREMENT, 
     title TEXT NOT NULL,
     address_id INTEGER NOT NULL,
+    location_notes TEXT,
     FOREIGN KEY (address_id) REFERENCES addresses(id)
 );
 
 CREATE TABLE event_titles (
     id INTEGER PRIMARY KEY AUTOINCREMENT, 
-    abbreviation TEXT NOT NULL
+    title TEXT NOT NULL,
+    abbreviation TEXT
 );
 
 CREATE TABLE icon_types (
@@ -32,6 +34,7 @@ CREATE TABLE icons (
     id INTEGER PRIMARY KEY AUTOINCREMENT, 
     title INTEGER NOT NULL,
     icon_type_id INTEGER NOT NULL,
+    icon_data BLOB NOT NULL,
     FOREIGN KEY (icon_type_id) REFERENCES icon_types(id)
 );
 

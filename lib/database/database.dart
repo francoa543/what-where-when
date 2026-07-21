@@ -54,9 +54,10 @@ class AppDatabase {
     );
   }
 
-  /// Executes SQL to build the app's database structure.
-  Future<void> createDatabase(Database db) async {
-    final sql = await rootBundle.loadString('lib/database/create.sql');
+  /// Executes SQL for the .sql asset given by [assetPath] on the database [db].
+  Future<void> _executeSQL(String assetPath, Database db) async {
+    // Load the SQL asset and read it before executing:
+    final sql = await rootBundle.loadString(assetPath);
     final statements = sql
         .split(';')
         .map((statement) => statement.trim())
@@ -65,5 +66,14 @@ class AppDatabase {
     for (final statement in statements) {
       await db.execute(statement);
     }
+  }
+
+  /// Executes SQL to build the app's database structure.
+  Future<void> createDatabase(Database db) async {
+    // Execute SQL to create tables:
+    _executeSQL('lib/database/create.sql', db);
+
+    // Load test data if devMode is on and no reset is happening:
+    if (devModeOn == true && shouldReset == false) {}
   }
 }
